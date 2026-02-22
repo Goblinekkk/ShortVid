@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShortVid</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="config.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>ShortVid</h1>
+      <div id="authArea" class="auth-area"></div>
+    </header>
+
+    <main class="container">
+      <section id="welcome" class="card"></section>
+
+      <section id="dashboard" class="card hidden">
+        <h2>Můj kanál</h2>
+        <form id="channelForm" class="stack">
+          <label for="channelName">Název kanálu</label>
+          <input id="channelName" name="channelName" maxlength="40" required />
+          <button type="submit">Uložit název</button>
+        </form>
+
+        <hr />
+
+        <h3>Nahrát short video</h3>
+        <form id="uploadForm" class="stack">
+          <label for="videoTitle">Název videa</label>
+          <input id="videoTitle" name="videoTitle" maxlength="80" required />
+
+          <label for="videoFile">Soubor videa (max 50 MB)</label>
+          <input id="videoFile" name="videoFile" type="file" accept="video/*" required />
+
+          <button type="submit">Nahrát</button>
+          <p class="hint">Videa se ukládají lokálně do tvého prohlížeče (IndexedDB).</p>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Feed videí</h2>
+        <div id="feed" class="grid"></div>
+      </section>
+    </main>
+  </body>
+</html>
