@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShortVid</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🎬 ShortVid</h1>
+    <p>Platforma pro krátká videa s Google registrací kanálu.</p>
+    <nav>
+      <% if (user) { %>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Odhlásit se</a>
+      <% } else { %>
+        <% if (googleReady) { %>
+          <a class="btn" href="/auth/google">Přihlásit přes Google</a>
+        <% } else { %>
+          <span class="warning">Google OAuth zatím není nastavený (.env).</span>
+        <% } %>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Nejnovější videa</h2>
+      <div class="video-grid">
+        <% videos.forEach(video => { %>
+          <article class="card">
+            <video controls preload="metadata" src="<%= video.file_path %>"></video>
+            <h3><%= video.title %></h3>
+            <p><%= video.description %></p>
+            <small>Kanál: <%= video.channel_name %></small>
+          </article>
+        <% }) %>
+        <% if (videos.length === 0) { %>
+          <p>Zatím tu nejsou žádná videa.</p>
+        <% } %>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

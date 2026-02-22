@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | ShortVid</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Tvůj dashboard</h1>
+    <p>Přihlášen jako <strong><%= user.display_name %></strong> (<%= user.email %>)</p>
+    <nav>
+      <a href="/">Domů</a>
+      <a href="/logout">Odhlásit se</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-layout">
+    <section class="card">
+      <h2>Nastavení kanálu</h2>
+      <form method="post" action="/channel">
+        <label>Název kanálu</label>
+        <input type="text" name="channelName" value="<%= user.channel_name %>" required />
+        <button type="submit">Uložit</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Nahrát nové video</h2>
+      <form method="post" action="/upload" enctype="multipart/form-data">
+        <label>Název videa</label>
+        <input type="text" name="title" required />
+
+        <label>Popis</label>
+        <textarea name="description" rows="3"></textarea>
+
+        <label>Soubor videa (max 100 MB)</label>
+        <input type="file" name="videoFile" accept="video/*" required />
+
+        <button type="submit">Nahrát video</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Moje videa</h2>
+      <div class="video-grid">
+        <% myVideos.forEach(video => { %>
+          <article>
+            <video controls preload="metadata" src="<%= video.file_path %>"></video>
+            <h3><%= video.title %></h3>
+            <p><%= video.description %></p>
+          </article>
+        <% }) %>
+        <% if (myVideos.length === 0) { %>
+          <p>Ještě jsi žádné video nenahrál(a).</p>
+        <% } %>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
